@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerMovmentSpeed;
     [SerializeField] private float playerRotationSpeed;
     [SerializeField] private float JumpForce;
-    [SerializeField] private Rigidbody playerRiggidBody;
+    [SerializeField] private Rigidbody playerRigidBody;
 
     private bool isOnTheGround = false;
 
@@ -22,18 +22,29 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
-    private void Update()
+   
+    private void FixedUpdate()
     {
         PlayerMovment();
-        PlayerRotation();
+        
+        
+    }
+    private void Update()
+    {
         JumpPlayer();
-
+        PlayerRotation();
     }
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag(GROUNDTAG))
         {
             isOnTheGround = true;
+
+            playerRigidBody.constraints = playerRigidBody.constraints | RigidbodyConstraints.FreezeRotationY;
+
+
+            Debug.Log(isOnTheGround);
+
         }
     }
 
@@ -41,8 +52,10 @@ public class PlayerController : MonoBehaviour
     {
         verticalInputMove = Input.GetAxis("Vertical");
         horizontalInputMove = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.forward * playerMovmentSpeed * Time.deltaTime * verticalInputMove);
-        transform.Translate(Vector3.right * playerMovmentSpeed * Time.deltaTime * horizontalInputMove);
+        
+        Vector3 movement = (horizontalInputMove * transform.right + verticalInputMove * transform.forward).normalized * (playerMovmentSpeed);
+        playerRigidBody.velocity = new Vector3(movement.x, playerRigidBody.velocity.y,movement.z);
+
 
 
     }
@@ -57,8 +70,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isOnTheGround == true)
         {
-            playerRiggidBody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            Debug.Log("jump");
+            playerRigidBody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
             isOnTheGround = false;
+
+            Debug.Log(isOnTheGround);
         }
     }
   
