@@ -9,9 +9,11 @@ public class UIManager: MonoBehaviour
 
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject creditPanel;
 
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionButton;
+    [SerializeField] private Button creditButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button backButton;
 
@@ -26,9 +28,13 @@ public class UIManager: MonoBehaviour
 
         gameManagerScript = FindObjectOfType<GameManager>();
 
+        musicSlider.onValueChanged.AddListener(gameManagerScript.SetMusicVolume);
+
+        playButton.onClick.AddListener(() => { gameManagerScript.PlayTheGame(); } );
         optionButton.onClick.AddListener(() => { gameManagerScript.OptionsMenu(); } );
         backButton.onClick.AddListener(() => { gameManagerScript.MainMenu(); } );
         exitButton.onClick.AddListener(() => { gameManagerScript.ExitGame(); } );
+        creditButton.onClick.AddListener(() => { gameManagerScript.CreditPanel(); });
 
     }
 
@@ -57,5 +63,18 @@ public class UIManager: MonoBehaviour
         mainMenuPanel.SetActive(true);
     }
    */
+    public void ShowCreditsPanel()
+    {
+        creditPanel.SetActive(true);
+    }
+    public void HideCreditsPanel()
+    {
+        creditPanel.SetActive(false);
+    }
+
+    public void SetSliderValue(float value)
+    {
+        musicSlider.value = value;
+    }
 
 }
