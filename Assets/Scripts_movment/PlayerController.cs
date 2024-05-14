@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerRotationSpeed;
     [SerializeField] private float JumpForce;
     [SerializeField] private Rigidbody playerRigidBody;
+    [SerializeField] private LayerMask groundLayerMask;
     private bool isOnTheGround = false;
 
     // set variables animator
@@ -50,8 +52,17 @@ public class PlayerController : MonoBehaviour
     {
        // player jump and rotation
         
-        JumpPlayer();
+        
         PlayerRotation();
+
+      
+        bool raycastGround = Physics.Raycast(transform.position, Vector3.down, 20f , groundLayerMask);
+        playerAnimator.SetBool("IsOnTheGround", raycastGround);
+
+        if (raycastGround)
+        {
+            JumpPlayer();
+        }
 
         // Set variables of animators
 
@@ -61,32 +72,7 @@ public class PlayerController : MonoBehaviour
 
     // jump Player Logic and fall down
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag(GROUNDTAG))
-        {
-            isOnTheGround = true;
-
-            playerRigidBody.constraints = playerRigidBody.constraints | RigidbodyConstraints.FreezeRotationY;
-
-
-            
-
-        }
-    }
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.CompareTag(GROUNDTAG))
-        {
-            isOnTheGround = false;
-
-            playerRigidBody.constraints = playerRigidBody.constraints | RigidbodyConstraints.FreezeRotationY;
-
-
-            
-
-        }
-    }
+  
 
     //Player movement Logic
 
@@ -206,7 +192,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("MovingRight", isMovingRight);
         playerAnimator.SetBool("MovingBack", isMovingBack);
 
-        playerAnimator.SetBool("IsOnTheGround", isOnTheGround);
+       
     }
   
 
