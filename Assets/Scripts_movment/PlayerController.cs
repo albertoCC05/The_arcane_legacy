@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerRotationSpeed;
     [SerializeField] private float JumpForce;
     [SerializeField] private Rigidbody playerRigidBody;
-    private bool isOnTheGround = false;
+    public bool isOnTheGround = false;
 
     // set variables animator
 
@@ -121,6 +121,11 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+    //David NO estuvo aquí
+
+    //mondongo
+
     private void MovementAnimations()
     {
         if (verticalInputMove >= 0.1f)
@@ -155,7 +160,7 @@ public class PlayerController : MonoBehaviour
             isMovingRight = false;
             isMovingBack = false;
 
-
+            //Héctor Estuvo aqui
 
         }
         else
