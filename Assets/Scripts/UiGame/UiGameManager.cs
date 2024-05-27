@@ -11,17 +11,28 @@ public class UiGameManager : MonoBehaviour
     [SerializeField] private Slider lifeSlider;
 
     [SerializeField] private GameObject gameOverPanel;
-
-
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject controlsPanel;
 
 
     private void Start()
     {
         updatePotionText(0);
         HideGameOverPanel();
-        
-        
+        ContinuePausePanel();
+        HideControlPausePanel();
+
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("escape"))
+        {
+            ShowPausePanel();
+        }
+    }
+
+
     public void LifeSliderUpdate(float life)
     {
         lifeSlider.value = life;
@@ -46,4 +57,36 @@ public class UiGameManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void ShowPausePanel()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+   
+    public void RestartPausePanel()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ContinuePausePanel ()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void ControlPausePanel()
+    {
+        controlsPanel.SetActive(true);
+
+    }
+
+    public void HideControlPausePanel()
+    {
+        controlsPanel.SetActive(false);
+    }
+
+
 }

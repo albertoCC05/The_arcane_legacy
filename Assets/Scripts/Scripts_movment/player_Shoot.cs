@@ -54,12 +54,8 @@ public class player_Shoot : MonoBehaviour
             attackEffect.Play();
 
             playerAnimator.SetTrigger("isAttacking");
-
-            if (raycastAtack)
-            {
-              
-            }
-
+        
+            
           
         
 

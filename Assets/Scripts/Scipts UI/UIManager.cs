@@ -10,6 +10,7 @@ public class UIManager: MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject creditPanel;
+    
 
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionButton;
@@ -17,11 +18,14 @@ public class UIManager: MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private Button backButton;
 
+
     [SerializeField] private Slider musicSlider;
 
     [SerializeField] private Toggle muteToggle;
 
     private GameManager gameManagerScript;
+
+
 
     private void Start()
     {
@@ -46,6 +50,7 @@ public class UIManager: MonoBehaviour
         {
             HideOptionsPanel();
             ShowMainMenuPanel();
+            
         }
     }
 
@@ -87,5 +92,7 @@ public class UIManager: MonoBehaviour
     {
         musicSlider.value = value;
     }
+
+  
 
 }
