@@ -244,6 +244,11 @@ public class PlayerController : MonoBehaviour
 
     // healFunction
 
+    public void GetDamage(float damage)
+    {
+        life = life - damage;
+        uiGamemanager.LifeSliderUpdate(life);
+    }
     private void Heal()
     {
         if (Input.GetKeyDown(KeyCode.E) && numberOfPotions > 0)
