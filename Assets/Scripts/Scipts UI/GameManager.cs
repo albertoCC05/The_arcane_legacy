@@ -7,25 +7,27 @@ public class GameManager : MonoBehaviour
 {
 
     private UIManager uiManager;
+    private UiGameManager uiGame;
 
     [SerializeField] private AudioSource musicAudioSource;
+
+    private bool isGameOver = false;
 
 
     void Start()
     {
+        Time.timeScale = 1f;
+
+        isGameOver = false;
+
+        uiGame = FindObjectOfType<UiGameManager>();
         uiManager = FindObjectOfType<UIManager>();
-        uiManager.HideOptionsPanel();
-        uiManager.HideCreditsPanel();
+
+        
+
+       
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("escape"))
-        {
-            uiManager.HideOptionsPanel();
-            uiManager.ShowMainMenuPanel();
-        }
-    }
 
     public void PlayTheGame()
     {
@@ -64,6 +66,15 @@ public class GameManager : MonoBehaviour
     {
         musicAudioSource.mute = musicMuted;
         uiManager.SetSliderValue(0);
+    }
+
+    public void SetGameOver()
+    {
+        isGameOver = true;
+        uiGame.ShowGameOverPanel();
+        Time.timeScale = 0;
+
+       
     }
 
 }

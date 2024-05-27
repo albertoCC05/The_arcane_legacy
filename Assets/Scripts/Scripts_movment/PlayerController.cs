@@ -42,15 +42,18 @@ public class PlayerController : MonoBehaviour
     // push force
 
    [SerializeField] private float forcePush = 100;
-    
 
+    private GameManager gameManager;
 
     private void Start()
     {
-        // lock the cursor in the middle of the screen
+        
 
         uiGamemanager = FindObjectOfType<UiGameManager>();
+        gameManager = FindObjectOfType<GameManager>();
         uiGamemanager.LifeSliderUpdate(life);
+
+        // lock the cursor in the middle of the screen
 
         Cursor.lockState = CursorLockMode.Locked;
         numberOfPotions = 0;
@@ -79,6 +82,9 @@ public class PlayerController : MonoBehaviour
 
         MovementAnimations();
         SetAnimationVariables();
+
+
+       
     }
 
     // jump Player Logic and fall down
@@ -256,6 +262,14 @@ public class PlayerController : MonoBehaviour
     {
         life = life - damage;
         uiGamemanager.LifeSliderUpdate(life);
+        
+
+        if (life <= 0)
+        {
+            gameManager.SetGameOver();
+            Cursor.lockState = CursorLockMode.None;
+        }
+
     }
     private void Heal()
     {

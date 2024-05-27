@@ -30,12 +30,23 @@ public class UIManager: MonoBehaviour
 
         musicSlider.onValueChanged.AddListener(gameManagerScript.SetMusicVolume);
 
+        HideOptionsPanel();
+        HideCreditsPanel();
+
         playButton.onClick.AddListener(() => { gameManagerScript.PlayTheGame(); } );
         optionButton.onClick.AddListener(() => { gameManagerScript.OptionsMenu(); } );
         backButton.onClick.AddListener(() => { gameManagerScript.MainMenu(); } );
         exitButton.onClick.AddListener(() => { gameManagerScript.ExitGame(); } );
         creditButton.onClick.AddListener(() => { gameManagerScript.CreditPanel(); });
 
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown("escape"))
+        {
+            HideOptionsPanel();
+            ShowMainMenuPanel();
+        }
     }
 
     public void ShowMainMenuPanel() {
