@@ -11,6 +11,8 @@ public class Enemy_Slime : MonoBehaviour
     private Vector3 currentDestination;
     private float damage = 20;
 
+    private float enemyLive = 30f; 
+
     private PlayerController playerController;
 
    [SerializeField] private Animator slimeAnimator;
@@ -62,5 +64,10 @@ public class Enemy_Slime : MonoBehaviour
             Debug.Log(damage);
             
         }
+    }
+
+    private void TakeDamage(float damagePlayer)
+    {
+        enemyLive = enemyLive - damagePlayer;
     }
 }

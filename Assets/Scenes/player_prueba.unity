@@ -5703,6 +5703,10 @@ PrefabInstance:
       value: -5.21
       objectReference: {fileID: 0}
     - target: {fileID: 6329115850850713550, guid: 977adb7326d19b84bb079ff27e418e73, type: 3}
+      propertyPath: forcePush
+      value: 7000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329115850850713550, guid: 977adb7326d19b84bb079ff27e418e73, type: 3}
       propertyPath: healEfect
       value: 
       objectReference: {fileID: 2069970516}
@@ -6821,6 +6825,10 @@ PrefabInstance:
     - target: {fileID: 1524411113276028, guid: e2aafa8770d34a9591b41bedf4e318ba, type: 3}
       propertyPath: m_Name
       value: enemy_slime (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524411113276028, guid: e2aafa8770d34a9591b41bedf4e318ba, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4544219117696442, guid: e2aafa8770d34a9591b41bedf4e318ba, type: 3}
       propertyPath: m_LocalScale.x

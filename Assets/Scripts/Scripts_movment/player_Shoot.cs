@@ -11,7 +11,7 @@ public class player_Shoot : MonoBehaviour
     [SerializeField] private float atackRaycastDistance;
      private float timeBeetwenAtacks;
 
-   
+    private Enemy_Slime slimeScript;
 
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private Animator playerAnimator;
@@ -23,6 +23,7 @@ public class player_Shoot : MonoBehaviour
     {
         
         playerControllerScript = FindObjectOfType<PlayerController>();
+        slimeScript = FindObjectOfType<Enemy_Slime>();
 
 
     }
@@ -35,6 +36,8 @@ public class player_Shoot : MonoBehaviour
         {
             Shoot();
             timeBeetwenAtacks = 0;
+            
+
         }
             
         
@@ -54,7 +57,7 @@ public class player_Shoot : MonoBehaviour
 
             if (raycastAtack)
             {
-
+              
             }
 
           

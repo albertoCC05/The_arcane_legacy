@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     private float horizontalInputMove;
     private float mouseInputRotate;
 
+    // push force
+
+   [SerializeField] private float forcePush = 100;
     
 
 
@@ -91,6 +94,12 @@ public class PlayerController : MonoBehaviour
 
             
 
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+           
+
+            playerRigidBody.AddForce((other.transform.forward) * forcePush, ForceMode.Impulse);
         }
     }
     private void OnCollisionExit(Collision other)
@@ -150,9 +159,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //David NO estuvo aquí
+    
 
-    //mondongo
+    
 
     private void MovementAnimations()
     {
@@ -188,8 +197,7 @@ public class PlayerController : MonoBehaviour
             isMovingRight = false;
             isMovingBack = false;
 
-            //Héctor Estuvo aqui
-
+            
         }
         else
         {
