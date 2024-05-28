@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy_Slime : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject playerReference;
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
     private Vector3 currentDestination;
-    private float damage = 20;
+   [SerializeField] private float damage = 20;
+    [SerializeField] private float deathTimeDelay;
+    private bool isDeath = false;
 
-    private float enemyLive = 30f; 
+    [SerializeField] private float enemyLive = 20f; 
 
     private PlayerController playerController;
 
@@ -25,19 +27,24 @@ public class Enemy_Slime : MonoBehaviour
     }
     private void Update()
     {
-        if ( Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
+        if (isDeath == false)
         {
-            agent.SetDestination(playerReference.transform.position);
-        }
-        else
-        {
-            Patroll();
+            if (Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
+            {
+                agent.SetDestination(playerReference.transform.position);
+            }
+            else
+            {
+                Patroll();
+            }
+
+            if (Vector3.Distance(transform.position, currentDestination) < 0.5f)
+            {
+                Patroll();
+            }
         }
 
-        if (Vector3.Distance(transform.position, currentDestination) < 0.5f)
-        {
-            Patroll();
-        }
+      
     }
 
     private void Patroll()
@@ -66,8 +73,16 @@ public class Enemy_Slime : MonoBehaviour
         }
     }
 
-    private void TakeDamage(float damagePlayer)
+    public void TakeDamage(float damagePlayer)
     {
         enemyLive = enemyLive - damagePlayer;
+        if (enemyLive <=0)
+        {
+            slimeAnimator.SetTrigger("isDeath");
+            Object.Destroy(gameObject,deathTimeDelay);
+            agent.SetDestination(transform.position);º
+            isDeath = true;
+
+        }
     }
 }

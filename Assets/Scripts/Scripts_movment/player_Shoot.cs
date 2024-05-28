@@ -11,7 +11,7 @@ public class player_Shoot : MonoBehaviour
     [SerializeField] private float atackRaycastDistance;
      private float timeBeetwenAtacks;
 
-    private Enemy_Slime slimeScript;
+    private Enemy enemyScript;
 
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private Animator playerAnimator;
@@ -23,19 +23,22 @@ public class player_Shoot : MonoBehaviour
     {
         
         playerControllerScript = FindObjectOfType<PlayerController>();
-        slimeScript = FindObjectOfType<Enemy_Slime>();
+        
 
 
     }
 
     private void Update()
     {
+       
+
         timeBeetwenAtacks = timeBeetwenAtacks + Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && playerControllerScript.isOnTheGround == true && timeBeetwenAtacks >= 2f)
         {
             Shoot();
             timeBeetwenAtacks = 0;
+
             
 
         }
@@ -48,14 +51,22 @@ public class player_Shoot : MonoBehaviour
     {
         
         
-            bool raycastAtack = Physics.Raycast(transform.position, transform.forward, atackRaycastDistance, enemyLayerMask);
-            Color raycastHitColor = (raycastAtack) ? Color.green : Color.red;
-            Debug.DrawRay(transform.position, transform.forward, raycastHitColor);
+            bool raycastAtack = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, atackRaycastDistance, enemyLayerMask);
+            Color raycastHitColor = (raycastAtack) ? Color.green : Color.magenta;
+            Debug.DrawRay(transform.position, transform.forward * atackRaycastDistance, raycastHitColor);
             attackEffect.Play();
 
-            playerAnimator.SetTrigger("isAttacking");
+        Debug.Log(raycastAtack);
+
+        playerAnimator.SetTrigger("isAttacking");
         
+            if ( raycastAtack )
+        {
+            enemyScript = hit.collider.gameObject.GetComponent<Enemy>();
+            enemyScript.TakeDamage(10);
+
             
+        } 
           
         
 
