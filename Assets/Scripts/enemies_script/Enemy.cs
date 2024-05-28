@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
    [SerializeField] private float damage = 20;
     [SerializeField] private float deathTimeDelay;
     private bool isDeath = false;
+    [SerializeField] private ParticleSystem hitEfect;
 
     [SerializeField] private float enemyLive = 20f; 
 
@@ -76,12 +77,15 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damagePlayer)
     {
         enemyLive = enemyLive - damagePlayer;
+        hitEfect.Play();
+
         if (enemyLive <=0)
         {
             slimeAnimator.SetTrigger("isDeath");
             Object.Destroy(gameObject,deathTimeDelay);
-            agent.SetDestination(transform.position);º
+            agent.SetDestination(transform.position);
             isDeath = true;
+            
 
         }
     }

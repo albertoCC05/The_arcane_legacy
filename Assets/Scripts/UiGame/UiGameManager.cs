@@ -13,6 +13,8 @@ public class UiGameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
+    [SerializeField] private GameObject startControlsPanel;
+        
 
 
     private void Start()
@@ -21,6 +23,9 @@ public class UiGameManager : MonoBehaviour
         HideGameOverPanel();
         ContinuePausePanel();
         HideControlPausePanel();
+        ShowControls();
+
+        Time.timeScale = 0;
 
     }
 
@@ -75,6 +80,7 @@ public class UiGameManager : MonoBehaviour
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ControlPausePanel()
@@ -86,6 +92,17 @@ public class UiGameManager : MonoBehaviour
     public void HideControlPausePanel()
     {
         controlsPanel.SetActive(false);
+    }
+    public void ShowControls()
+    {
+        startControlsPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void HideControls()
+    {
+        startControlsPanel.SetActive(false);
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
 

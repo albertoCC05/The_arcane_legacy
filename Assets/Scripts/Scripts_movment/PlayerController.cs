@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerController : MonoBehaviour
 {
@@ -45,6 +46,11 @@ public class PlayerController : MonoBehaviour
 
     private GameManager gameManager;
 
+    // post proces volume
+
+    
+    [SerializeField] private GameObject postProcesVolume;
+
     private void Start()
     {
         
@@ -57,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         numberOfPotions = 0;
+
+        postProcesVolume.SetActive(false);
+        
     }
    
     private void FixedUpdate()
@@ -263,6 +272,10 @@ public class PlayerController : MonoBehaviour
         life = life - damage;
         uiGamemanager.LifeSliderUpdate(life);
         
+        if (life <= 30)
+        {
+            postProcesVolume.SetActive(true);
+        }
 
         if (life <= 0)
         {
@@ -281,6 +294,10 @@ public class PlayerController : MonoBehaviour
             if ( life >= 100)
             {
                 life = 100;
+            }
+            if (life > 30)
+            {
+                postProcesVolume.SetActive(false);
             }
             healEfect.Play();
             uiGamemanager.LifeSliderUpdate(life);
