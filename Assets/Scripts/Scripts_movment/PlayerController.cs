@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
        
 
         if ( verticalInputMove >= 0.1f || verticalInputMove <= -0.1f)
+
         {
             movement = (verticalInputMove * transform.forward).normalized * (playerMovmentSpeed);
           // movement = new Vector3(0, playerRigidBody.velocity.y, verticalInputMove * playerMovmentSpeed);

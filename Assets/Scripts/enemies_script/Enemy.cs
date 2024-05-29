@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +19,12 @@ public class Enemy : MonoBehaviour
 
     private PlayerController playerController;
 
-   [SerializeField] private Animator slimeAnimator;
+   [SerializeField] private Animator enemyAnimator;
+    private bool isChasing = false;
+
+    private float lastDistance = 0f;
+
+    
 
 
     private void Start()
@@ -29,25 +35,31 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-       
-        
+      
+
             if (Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
             {
                 Chase();
+                isChasing = true;
+
             }
-            else
+             if (isChasing == true && Vector3.Distance(transform.position, playerReference.transform.position) >= 70f)
             {
-                Patroll();
+                 Patroll();
+                 isChasing = false;
             }
 
-            if (Vector3.Distance(transform.position, currentDestination) < 0.5f)
+            if (Vector3.Distance(transform.position, currentDestination) < 2f)
             {
+              Debug.Log("He llegado"); 
                 Patroll();
             }
         
 
       
     }
+
+   
 
     private void Patroll()
     {
@@ -58,10 +70,11 @@ public class Enemy : MonoBehaviour
     private void Chase()
     {
         agent.SetDestination(playerReference.transform.position);
+      
     }
     private void Atack()
     {
-        slimeAnimator.SetTrigger("atack");
+        enemyAnimator.SetTrigger("atack");
         
         
     }
@@ -83,7 +96,7 @@ public class Enemy : MonoBehaviour
 
         if (enemyLive <=0)
         {
-            slimeAnimator.SetTrigger("isDeath");
+            enemyAnimator.SetTrigger("isDeath");
             Object.Destroy(gameObject,deathTimeDelay);
             agent.SetDestination(transform.position);
             isDeath = true;
