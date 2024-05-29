@@ -29,8 +29,8 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        if (isDeath == false)
-        {
+       
+        
             if (Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
             {
                 Chase();
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
             {
                 Patroll();
             }
-        }
+        
 
       
     }
