@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
+        isDeath = false;
         Patroll();
     }
     private void Update()
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
             {
-                agent.SetDestination(playerReference.transform.position);
+                Chase();
             }
             else
             {
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour
     private void Atack()
     {
         slimeAnimator.SetTrigger("atack");
+        
         
     }
     private void OnCollisionEnter(Collision collision)
