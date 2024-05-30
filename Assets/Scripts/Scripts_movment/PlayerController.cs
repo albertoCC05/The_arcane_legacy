@@ -8,9 +8,7 @@ public class PlayerController : MonoBehaviour
     private const string GROUNDTAG = "Ground";
     private const string POTIONTAG = "potion";
 
-    
-
-    // set variables movment
+    // Set variables movement
      
     [SerializeField] private float playerMovmentSpeed;
     [SerializeField] private float playerRotationSpeed;
@@ -20,13 +18,14 @@ public class PlayerController : MonoBehaviour
 
     private UiGameManager uiGamemanager;
 
-    // potion and heal variables
+    // Potion and heal variables
 
     private float life = 100f;
     private int numberOfPotions = 0;
     const float healPotion = 30f;
     [SerializeField] private ParticleSystem healEfect;
-    // set variables animator
+
+    // Set variables animator
 
     [SerializeField] private Animator playerAnimator;
     private bool isMovingForward = false;
@@ -40,20 +39,19 @@ public class PlayerController : MonoBehaviour
     private float horizontalInputMove;
     private float mouseInputRotate;
 
-    // push force
+    // Push force
 
    [SerializeField] private float forcePush = 100;
 
     private GameManager gameManager;
 
-    // post proces volume
+    // Post process volume
 
     
     [SerializeField] private GameObject postProcesVolume;
 
     private void Start()
     {
-        
 
         uiGamemanager = FindObjectOfType<UiGameManager>();
         gameManager = FindObjectOfType<GameManager>();

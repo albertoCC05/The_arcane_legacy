@@ -17,6 +17,7 @@ public class UiGameManager : MonoBehaviour
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private GameObject startControlsPanel;
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject winPanel;
 
     [SerializeField] private Slider musicSlider;
 
@@ -125,6 +126,12 @@ public class UiGameManager : MonoBehaviour
     {
         optionsPanel.SetActive(false);
     }
+    public void ShowWinPanel()
+    {
+        SceneManager.LoadScene(2);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void SetSliderValue()
     {
         musicAudioSource.volume = musicSlider.value;

@@ -12,12 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AudioSource musicAudioSource;
 
     private bool isGameOver = false;
-    private int enemiesToDefeat;
+    private int enemiesToDefeat = 10;
     [SerializeField] private GameObject bossFog;
     private DataPersistance dataP;
-
-
-
 
     void Start()
     {
@@ -30,15 +27,9 @@ public class GameManager : MonoBehaviour
         uiGame = FindObjectOfType<UiGameManager>();
         uiManager = FindObjectOfType<UIManager>();
 
-        enemiesToDefeat = 2;
         uiGame.UpdateEnemiesText(enemiesToDefeat);
 
-        
-
-
     }
-
-   
 
     public void PlayTheGame()
     {
@@ -54,9 +45,7 @@ public class GameManager : MonoBehaviour
     {
         uiManager.HideOptionsPanel();
         uiManager.ShowMainMenuPanel();
-
     }
-
     public void ExitGame()
     {
         Application.Quit();
@@ -79,14 +68,17 @@ public class GameManager : MonoBehaviour
         uiManager.SetSliderValue(0);
     }
 
+    // Función de fin de juego cuando player muere
+
     public void SetGameOver()
     {
         isGameOver = true;
         uiGame.ShowGameOverPanel();
         Time.timeScale = 0;
-
-       
     }
+
+    // Cantidad de enemigos derrotados
+
     public void EnemiesDefeated()
     {
         enemiesToDefeat--;
@@ -99,10 +91,15 @@ public class GameManager : MonoBehaviour
         uiGame.UpdateEnemiesText(enemiesToDefeat);
 
     }
+
+    // Número de enemigos a derrotar
+
     public void SetEnemiesDefeated( int enemiesDefeated)
     {
         enemiesToDefeat = enemiesDefeated;
         uiGame.UpdateEnemiesText(enemiesToDefeat);
+
+        // Cuando derrotemos X enemigos se deshabilita la niebla del jefe
 
         if (enemiesToDefeat <= 0)
         {

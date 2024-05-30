@@ -76,15 +76,6 @@ public class UIManager: MonoBehaviour
     {
         optionsPanel.SetActive(false);
     }
-    /*public void ShowMainMenuPanel()
-    {
-        mainMenuPanel.SetActive(true);
-    }
-    public void ShowMainMenuPanel()
-    {
-        mainMenuPanel.SetActive(true);
-    }
-   */
     public void ShowCreditsPanel()
     {
         creditPanel.SetActive(true);
@@ -92,6 +83,7 @@ public class UIManager: MonoBehaviour
     public void HideCreditsPanel()
     {
         creditPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 
     public void SetSliderValue(float value)
