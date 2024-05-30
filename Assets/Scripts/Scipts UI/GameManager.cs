@@ -9,13 +9,20 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     private UiGameManager uiGame;
 
-    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] public AudioSource musicAudioSource;
 
     private bool isGameOver = false;
+    private int enemiesToDefeat;
+    [SerializeField] private GameObject bossFog;
+    private DataPersistance dataP;
+
+
 
 
     void Start()
     {
+        dataP = FindObjectOfType<DataPersistance>();
+
         Time.timeScale = 1f;
 
         isGameOver = false;
@@ -23,9 +30,12 @@ public class GameManager : MonoBehaviour
         uiGame = FindObjectOfType<UiGameManager>();
         uiManager = FindObjectOfType<UIManager>();
 
+        enemiesToDefeat = 2;
+        uiGame.UpdateEnemiesText(enemiesToDefeat);
+
         
 
-       
+
     }
 
    
@@ -77,5 +87,30 @@ public class GameManager : MonoBehaviour
 
        
     }
+    public void EnemiesDefeated()
+    {
+        enemiesToDefeat--;
+        if (enemiesToDefeat <= 0)
+        {
+            enemiesToDefeat = 0;
+            bossFog.SetActive(false);
+        }
 
+        uiGame.UpdateEnemiesText(enemiesToDefeat);
+
+    }
+    public void SetEnemiesDefeated( int enemiesDefeated)
+    {
+        enemiesToDefeat = enemiesDefeated;
+        uiGame.UpdateEnemiesText(enemiesToDefeat);
+
+        if (enemiesToDefeat <= 0)
+        {
+            bossFog.SetActive(false);
+        }
+    }
+    public int GetEnemiesDefeated()
+    {
+        return enemiesToDefeat;
+    }
 }

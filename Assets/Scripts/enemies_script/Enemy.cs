@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     private bool isChasing = false;
 
     private float lastDistance = 0f;
+    private GameManager gameManager;
+
 
     
 
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
+        gameManager = FindObjectOfType<GameManager>();
         isDeath = false;
         Patroll();
     }
@@ -100,6 +103,7 @@ public class Enemy : MonoBehaviour
             Object.Destroy(gameObject,deathTimeDelay);
             agent.SetDestination(transform.position);
             isDeath = true;
+            gameManager.EnemiesDefeated();
             
 
         }

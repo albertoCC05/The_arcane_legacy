@@ -34,7 +34,7 @@ public class player_Shoot : MonoBehaviour
 
         timeBeetwenAtacks = timeBeetwenAtacks + Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && playerControllerScript.isOnTheGround == true && timeBeetwenAtacks >= 2f)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && playerControllerScript.isOnTheGround == true && timeBeetwenAtacks >= 1f)
         {
             Shoot();
             timeBeetwenAtacks = 0;

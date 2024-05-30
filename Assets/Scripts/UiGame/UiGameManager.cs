@@ -8,14 +8,21 @@ using UnityEngine.UI;
 public class UiGameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI potionsText;
+    [SerializeField] private TextMeshProUGUI enemiesNumber;
+    
     [SerializeField] private Slider lifeSlider;
 
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private GameObject startControlsPanel;
-        
+    [SerializeField] private GameObject optionsPanel;
 
+    [SerializeField] private Slider musicSlider;
+
+    [SerializeField] private Toggle muteToggle;
+
+    [SerializeField] public AudioSource musicAudioSource;
 
     private void Start()
     {
@@ -24,6 +31,7 @@ public class UiGameManager : MonoBehaviour
         ContinuePausePanel();
         HideControlPausePanel();
         ShowControls();
+        HideOptionsPanel();
 
         Time.timeScale = 0;
 
@@ -104,6 +112,22 @@ public class UiGameManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
     }
+    public void UpdateEnemiesText(int enemiesToDefeat)
+    {
+        enemiesNumber.text = $"X {enemiesToDefeat}";
+    }
 
+    public void ShowOptionsPanel()
+    {
+        optionsPanel.SetActive(true);
+    }
+    public void HideOptionsPanel()
+    {
+        optionsPanel.SetActive(false);
+    }
+    public void SetSliderValue()
+    {
+        musicAudioSource.volume = musicSlider.value;
+    }
 
 }

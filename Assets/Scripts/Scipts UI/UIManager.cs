@@ -23,7 +23,10 @@ public class UIManager: MonoBehaviour
 
     [SerializeField] private Toggle muteToggle;
 
+   
+
     private GameManager gameManagerScript;
+    private DataPersistance dataP;
 
 
 
@@ -31,6 +34,7 @@ public class UIManager: MonoBehaviour
     {
 
         gameManagerScript = FindObjectOfType<GameManager>();
+        dataP = FindObjectOfType<DataPersistance>();
 
         musicSlider.onValueChanged.AddListener(gameManagerScript.SetMusicVolume);
 
@@ -43,6 +47,8 @@ public class UIManager: MonoBehaviour
         exitButton.onClick.AddListener(() => { gameManagerScript.ExitGame(); } );
         creditButton.onClick.AddListener(() => { gameManagerScript.CreditPanel(); });
 
+      
+       
     }
     private void Update()
     {
