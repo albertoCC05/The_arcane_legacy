@@ -5,70 +5,46 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //Scripts references
 
     private UIManager uiManager;
     private UiGameManager uiGame;
+    private DataPersistance dataP;
+
+    //Audio source reference
 
     [SerializeField] public AudioSource musicAudioSource;
 
+    //game variables
+
     private bool isGameOver = false;
     private int enemiesToDefeat = 10;
+
+    //boss fog reference, used it for desactivate it when you defeat all the enemies that you have to defeat to go to the boos
+
     [SerializeField] private GameObject bossFog;
-    private DataPersistance dataP;
 
     void Start()
     {
-        dataP = FindObjectOfType<DataPersistance>();
 
-        Time.timeScale = 1f;
-
-        isGameOver = false;
+        //Set scripts reference
 
         uiGame = FindObjectOfType<UiGameManager>();
         uiManager = FindObjectOfType<UIManager>();
+        dataP = FindObjectOfType<DataPersistance>();
+
+
+        // Set the variable is game over to false at the beggining of the scene
+
+        isGameOver = false;
+
+        //we update the text of number of enemies at the start of the scene
 
         uiGame.UpdateEnemiesText(enemiesToDefeat);
 
     }
 
-    public void PlayTheGame()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    public void OptionsMenu()
-    {
-        uiManager.ShowOptionsPanel();
-    }
-
-    public void MainMenu()
-    {
-        uiManager.HideOptionsPanel();
-        uiManager.ShowMainMenuPanel();
-    }
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
-
-    public void CreditPanel()
-    {
-        uiManager.HideMainMenuPanel();
-        uiManager.ShowCreditsPanel();
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        musicAudioSource.volume = volume;
-    }
-
-    public void MuteMusic(bool musicMuted)
-    {
-        musicAudioSource.mute = musicMuted;
-        uiManager.SetSliderValue(0);
-    }
-
-    // Función de fin de juego cuando player muere
+    // Game over function, it is called when the player dies
 
     public void SetGameOver()
     {
@@ -77,7 +53,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    // Cantidad de enemigos derrotados
+    // Number of enemies defeated, the initial number is 10 and when you defeat 1 when substract 1 to the enemies counter
+    // also when the counter is modified we update the enemies left text of the ui
+    // when the number of enemies equals to 0 the boss fog is desactivated and you can go to there to defeat him
 
     public void EnemiesDefeated()
     {
@@ -92,20 +70,23 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Número de enemigos a derrotar
+    //This function is to load the number of enemies defeated before you had save this information
 
     public void SetEnemiesDefeated( int enemiesDefeated)
     {
         enemiesToDefeat = enemiesDefeated;
         uiGame.UpdateEnemiesText(enemiesToDefeat);
 
-        // Cuando derrotemos X enemigos se deshabilita la niebla del jefe
+        // also if you save the number of enemies defeated when this number equals to 0 you unlock the boss zone
 
         if (enemiesToDefeat <= 0)
         {
             bossFog.SetActive(false);
         }
     }
+
+    //This function is to get the number of enemies defeated to save it whith data persistance
+
     public int GetEnemiesDefeated()
     {
         return enemiesToDefeat;

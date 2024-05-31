@@ -16,7 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     public bool isOnTheGround = false;
 
+    // scripts variables
+
     private UiGameManager uiGamemanager;
+    private GameManager gameManager;
 
     // Potion and heal variables
 
@@ -43,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
    [SerializeField] private float forcePush = 100;
 
-    private GameManager gameManager;
+ 
 
     // Post process volume
 
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        // set scripts variable
 
         uiGamemanager = FindObjectOfType<UiGameManager>();
         gameManager = FindObjectOfType<GameManager>();
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         // lock the cursor in the middle of the screen
 
-        Cursor.lockState = CursorLockMode.Locked;
+        
         numberOfPotions = 0;
 
         postProcesVolume.SetActive(false);
@@ -104,17 +108,15 @@ public class PlayerController : MonoBehaviour
 
             playerRigidBody.constraints = playerRigidBody.constraints | RigidbodyConstraints.FreezeRotationY;
 
-
-            
-
         }
         if (other.gameObject.CompareTag("Enemy"))
         {
-           
-
             playerRigidBody.AddForce((other.transform.forward) * forcePush, ForceMode.Impulse);
         }
     }
+
+    // when a player collides with an enemy, the player is inpulsed on the direction of the enemy;
+
     private void OnCollisionExit(Collision other)
     {
         if (other.gameObject.CompareTag(GROUNDTAG))
@@ -122,12 +124,11 @@ public class PlayerController : MonoBehaviour
             isOnTheGround = false;
 
             playerRigidBody.constraints = playerRigidBody.constraints | RigidbodyConstraints.FreezeRotationY;
-
-
-            
-
         }
     }
+
+    // when you collide with a potion, you take the potion and the counter of potions increases by 1
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(POTIONTAG))
@@ -145,8 +146,6 @@ public class PlayerController : MonoBehaviour
         verticalInputMove = Input.GetAxis("Vertical");
         horizontalInputMove = Input.GetAxis("Horizontal");
 
-
-
         Vector3 movement = Vector3.zero;
        
 
@@ -154,27 +153,22 @@ public class PlayerController : MonoBehaviour
 
         {
             movement = (verticalInputMove * transform.forward).normalized * (playerMovmentSpeed);
-          // movement = new Vector3(0, playerRigidBody.velocity.y, verticalInputMove * playerMovmentSpeed);
+         
         }
         else if (horizontalInputMove >= 0.1f || horizontalInputMove <= -0.1f)
         {
              movement = (horizontalInputMove * transform.right).normalized * (playerMovmentSpeed);
-           // movement = new Vector3(horizontalInputMove * playerMovmentSpeed, playerRigidBody.velocity.y, 0);
+           
         }
 
-
-
-        //  playerRigidBody.velocity = movement;
+       
         playerRigidBody.velocity = new Vector3(movement.x, playerRigidBody.velocity.y, movement.z); ;
-
-
-
 
 
     }
 
     
-
+    // movment animation logic
     
 
     private void MovementAnimations()
@@ -264,7 +258,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("IsOnTheGround", isOnTheGround);
     }
 
-    // healFunction
+    // take damage function
 
     public void GetDamage(float damage)
     {
@@ -283,6 +277,9 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    // heal Function
+
     private void Heal()
     {
         if (Input.GetKeyDown(KeyCode.E) && numberOfPotions > 0)

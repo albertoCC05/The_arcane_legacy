@@ -7,26 +7,30 @@ using UnityEngine.UI;
 
 public class UiGameManager : MonoBehaviour
 {
+    // This script is for the ui of the game scene
+
+    // Ui elements
+
     [SerializeField] private TextMeshProUGUI potionsText;
     [SerializeField] private TextMeshProUGUI enemiesNumber;
-    
     [SerializeField] private Slider lifeSlider;
-
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private GameObject startControlsPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject winPanel;
-
     [SerializeField] private Slider musicSlider;
-
     [SerializeField] private Toggle muteToggle;
+
+    // audio source reference
 
     [SerializeField] public AudioSource musicAudioSource;
 
     private void Start()
     {
+        // initial update of the ui of the game
+
         updatePotionText(0);
         HideGameOverPanel();
         ContinuePausePanel();
@@ -34,18 +38,24 @@ public class UiGameManager : MonoBehaviour
         ShowControls();
         HideOptionsPanel();
 
+        // set the time scale to 0 at the start of the scene because we first show the control panel and we need to pause the game at this moment
+        // when you click on the ok button of that panel, the time is set to 1 again and it starts the game
+
         Time.timeScale = 0;
 
     }
 
     private void Update()
     {
+        //we show the pause panel if you press escape
+
         if (Input.GetKeyDown("escape"))
         {
             ShowPausePanel();
         }
     }
 
+    // ui functions for update text, sliders, hide and show panels etc
 
     public void LifeSliderUpdate(float life)
     {
@@ -110,6 +120,7 @@ public class UiGameManager : MonoBehaviour
     public void HideControls()
     {
         startControlsPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
     }

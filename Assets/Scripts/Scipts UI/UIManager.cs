@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager: MonoBehaviour
 {
+
+    //This script is for the UI of the main menu scene
+
+    //Panels Reference
 
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject creditPanel;
     
+    //Buttons and UI interactable elements reference
 
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button creditButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button backButton;
-
-
     [SerializeField] private Slider musicSlider;
-
     [SerializeField] private Toggle muteToggle;
 
-   
+    [SerializeField] private AudioSource musicAudioSource;
+
+    //Scripts Reference
 
     private GameManager gameManagerScript;
     private DataPersistance dataP;
@@ -33,25 +38,22 @@ public class UIManager: MonoBehaviour
     private void Start()
     {
 
+        //Scripts set Reference
+
         gameManagerScript = FindObjectOfType<GameManager>();
         dataP = FindObjectOfType<DataPersistance>();
 
-        musicSlider.onValueChanged.AddListener(gameManagerScript.SetMusicVolume);
+
+       //Hide panels at the start of the scene
 
         HideOptionsPanel();
         HideCreditsPanel();
 
-        playButton.onClick.AddListener(() => { gameManagerScript.PlayTheGame(); } );
-        optionButton.onClick.AddListener(() => { gameManagerScript.OptionsMenu(); } );
-        backButton.onClick.AddListener(() => { gameManagerScript.MainMenu(); } );
-        exitButton.onClick.AddListener(() => { gameManagerScript.ExitGame(); } );
-        creditButton.onClick.AddListener(() => { gameManagerScript.CreditPanel(); });
-
-      
-       
     }
     private void Update()
     {
+        // if you press escape you hide the options panel
+
         if (Input.GetKeyDown("escape"))
         {
             HideOptionsPanel();
@@ -59,6 +61,8 @@ public class UIManager: MonoBehaviour
             
         }
     }
+
+    // Show and hide panels functions
 
     public void ShowMainMenuPanel() {
         mainMenuPanel.SetActive(true);
@@ -86,9 +90,33 @@ public class UIManager: MonoBehaviour
         mainMenuPanel.SetActive(true);
     }
 
-    public void SetSliderValue(float value)
+    // go to level scene
+
+    public void PlayTheGame()
     {
-        musicSlider.value = value;
+        SceneManager.LoadScene(1);
+    }
+
+    //exit of the game
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    //Set music slider volume function and mute function
+
+
+    public void MuteMusic(bool musicMuted)
+    {
+        musicAudioSource.mute = musicMuted;
+       
+    }
+
+
+    public void SetSliderValue()
+    {
+        musicAudioSource.volume = musicSlider.value;
     }
 
   

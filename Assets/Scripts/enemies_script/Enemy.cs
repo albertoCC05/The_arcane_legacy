@@ -6,35 +6,59 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    //Scene elements reference
+
     [SerializeField] private GameObject playerReference;
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private float damage = 20;
-    [SerializeField] private float deathTimeDelay;
-    [SerializeField] private ParticleSystem hitEfect;
+
+    // enemies stats value
+
+    [SerializeField] private float damage = 20;   
     [SerializeField] private float enemyLive = 20f;
+
+    // enemies visual efects and animation reference
+
+    [SerializeField] private ParticleSystem hitEfect;
     [SerializeField] private Animator enemyAnimator;
+    [SerializeField] private float deathTimeDelay;
+
+    // conditions and state variables
 
     private Vector3 currentDestination;
     private bool isDeath = false;
+    private bool isChasing = false;
+
+    // scripts reference
+
+    private GameManager gameManager;
     private UiGameManager uiGameManager;
     private PlayerController playerController;
-    private bool isChasing = false;
-    private float lastDistance = 0f;
-    private GameManager gameManager;
 
 
     private void Start()
     {
+        //scripts set reference
+
         playerController = FindObjectOfType<PlayerController>();
         gameManager = FindObjectOfType<GameManager>();
         uiGameManager = FindObjectOfType<UiGameManager>();
+
+        // setting the condition is death to false
+
         isDeath = false;
+
+        //Set the state of patroll 
+
         Patroll();
     }
     private void Update()
     {
-      
+     
+        // depending on the distance to way points or to the player and if the state is chasing is activated when set the state of the enemy
+        // if the player is near to the enemy, the enemy chase the player
+        // if the enemy is chasing the player and the player gets out of range of the enemy, the enemy patrolls again
+        // and when the enemy isn't on the range, the enemy patrolls
 
             if (Vector3.Distance(transform.position, playerReference.transform.position) < 70f)
             {
@@ -56,7 +80,8 @@ public class Enemy : MonoBehaviour
       
     }
 
-    // Función de patrulla del enemigo entre varios puntos
+    // Patrol funcition, the enemy sets a random destination, which is assigned by inspector in a array, and then it goes to the chosen destination
+    // when he arrives it search another point
 
     private void Patroll()
     {
@@ -65,7 +90,7 @@ public class Enemy : MonoBehaviour
         currentDestination = destination;
     }
 
-    // Función de perseguir al player
+    // when the player is near to the enemy, the enemy follows the palyer
 
     private void Chase()
     {
@@ -73,7 +98,7 @@ public class Enemy : MonoBehaviour
       
     }
 
-    // Función de la animación de ataque del enemigo
+    // When the enemy collides whith the player, they do the animation of attack, the function for take damage of the player is called OnCollisionEnter
 
     private void Atack()
     {
@@ -82,7 +107,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    // Activa la animación de ataque de los enemigo y hace daño al player
+    // Activates the enemy attack animation and the player takes the damage of the enemy
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -95,12 +120,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // this function is made for recive damage, when the player attacks to an enemy, it substracts the damage of the player to his live
+    // also a particle system is played to have the feedback of taking damage
+
     public void TakeDamage(float damagePlayer)
     {
         enemyLive = enemyLive - damagePlayer;
         hitEfect.Play();
 
-        // Activa la animación de muerte de los enemigos, dejan de patrullar o seguir al player y desaparecen
+        // when the enemy live reaches 0, the enemy dies, first the death animation is played and then the enemy is destroyed
 
         if (enemyLive <=0)
         {
@@ -110,13 +138,12 @@ public class Enemy : MonoBehaviour
             isDeath = true;
             gameManager.EnemiesDefeated();
 
-            // Se enseña el panel de victoria cuando matamos al golem
+            // When you kill the enemy that has the name Golem_Boss the game ends and you win, also we show the win panel in other scene
 
             if (gameObject.name == "Golem_Boss")
             {
                 uiGameManager.ShowWinPanel();
             }
-
 
         }
     }
