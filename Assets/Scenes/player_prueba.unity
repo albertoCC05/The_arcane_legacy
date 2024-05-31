@@ -15042,9 +15042,9 @@ MonoBehaviour:
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  soundEfectAudioSource: {fileID: 1921728805}
   playerAnimator: {fileID: 320367306}
   attackEffect: {fileID: 1244090535}
-  soundEfectAudioSource: {fileID: 1921728805}
 --- !u!82 &1169505795
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15059,7 +15059,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.586
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -25092,10 +25092,10 @@ MonoBehaviour:
   - {fileID: 1788628399}
   agent: {fileID: 2036320403}
   damage: 50
-  deathTimeDelay: 1.6
-  hitEfect: {fileID: 952536339}
   enemyLive: 150
+  hitEfect: {fileID: 952536339}
   enemyAnimator: {fileID: 2036320401}
+  deathTimeDelay: 1.6
 --- !u!65 &2036320405
 BoxCollider:
   m_ObjectHideFlags: 0
